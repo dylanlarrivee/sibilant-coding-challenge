@@ -1,0 +1,108 @@
+(comment "Define the determine-order function")
+(def determine-order (example-tasks, chosen-tasks)
+     (var last-chosen-task (get chosen-tasks (- chosen-tasks.length 1)))
+     (var chosen-task-counter (- chosen-tasks.length 1))
+     (var needed-tasks-arr [])
+     (var task-match false)
+     (var i (- example-tasks.length 1))
+     (while (and (>= i 0) (= task-match false))
+          (var task (get example-tasks i 'task))
+          (var chosen-task (get chosen-tasks chosen-task-counter))
+          (if (= task-match true)()(assign needed-tasks-arr (append needed-tasks-arr task)))
+          (if (= task chosen-task) (assign task-match true))
+          (decr i)
+     )
+     (if (= task-match false) (assign needed-tasks-arr []))
+needed-tasks-arr)
+
+(comment "Define the example-tasks for test 1")
+(var example-tasks
+[{task "make a sandwich", depends ["buy groceries"]}
+{task "buy groceries", depends ["go to the store"]}
+{task "go to the store", depends []}])
+
+(console.log "Test 1")
+(console.log "example-tasks:" example-tasks)
+(console.log "task-subset:" ["make a sandwich"])
+(console.log "Test 1 Result:" (determine-order example-tasks ["make a sandwich"]))
+
+(comment "Define the example-tasks for test 2")
+(var example-tasks
+[{task "make a sandwich", depends ["buy groceries"]}
+{task "buy groceries", depends ["go to the store"]}
+{task "go to the store", depends []}])
+
+(console.log "Test 2")
+(console.log "example-tasks:" example-tasks)
+(console.log "task-subset:" ["buy groceries" "make a sandwich"])
+(console.log "Test 2 Result:" (determine-order example-tasks ["buy groceries" "make a sandwich"]))
+
+(comment "Define the example-tasks for test 3")
+(var example-tasks
+[{task "make a sandwich", depends ["buy groceries"]}
+{task "buy groceries", depends ["go to the store"]}
+{task "go to the store", depends []}])
+
+(console.log "Test 3")
+(console.log "example-tasks:" example-tasks)
+(console.log "task-subset:" ["buy groceries"])
+(console.log "Test 3 Result:" (determine-order example-tasks ["buy groceries"]))
+
+
+(comment "Define the example-tasks for test 4")
+(var example-tasks
+[{task "Step 6", depends ["Step 5"]}
+{task "Step 5", depends ["Step 4"]}
+{task "Step 4", depends ["Step 3"]}
+{task "Step 3", depends ["Step 2"]}
+{task "Step 2", depends ["Step 1"]}
+{task "Step 1", depends []}])
+
+(console.log "Test 4")
+(console.log "example-tasks:" example-tasks)
+(console.log "task-subset:" ["Step 4"])
+(console.log "Test 4 Result:" (determine-order example-tasks ["Step 4"]))
+
+
+(comment "Define the example-tasks for test 5")
+(var example-tasks
+[{task "Step 6", depends ["Step 5"]}
+{task "Step 5", depends ["Step 4"]}
+{task "Step 4", depends ["Step 3"]}
+{task "Step 3", depends ["Step 2"]}
+{task "Step 2", depends ["Step 1"]}
+{task "Step 1", depends []}])
+
+(console.log "Test 5")
+(console.log "example-tasks:" example-tasks)
+(console.log "task-subset:" ["Step 1" "Step 2" "Step 3"])
+(console.log "Test 5 Result:" (determine-order example-tasks ["Step 1" "Step 2" "Step 3"]))
+
+
+(comment "Define the example-tasks for test 6")
+(var example-tasks
+[{task "Step 6", depends ["Step 5"]}
+{task "Step 5", depends ["Step 4"]}
+{task "Step 4", depends ["Step 3"]}
+{task "Step 3", depends ["Step 2"]}
+{task "Step 2", depends ["Step 1"]}
+{task "Step 1", depends []}])
+
+(console.log "Test 6")
+(console.log "example-tasks:" example-tasks)
+(console.log "task-subset:" ["Step 1"])
+(console.log "Test 6 Result:" (determine-order example-tasks ["Step 1"]))
+
+(comment "Define the example-tasks for test 7")
+(var example-tasks
+[{task "Step 6", depends ["Step 5"]}
+{task "Step 5", depends ["Step 4"]}
+{task "Step 4", depends ["Step 3"]}
+{task "Step 3", depends ["Step 2"]}
+{task "Step 2", depends ["Step 1"]}
+{task "Step 1", depends []}])
+
+(console.log "Test 7")
+(console.log "example-tasks:" example-tasks)
+(console.log "task-subset:" ["Step 7"])
+(console.log "Test 7 Result:" (determine-order example-tasks ["Step 7"]))
